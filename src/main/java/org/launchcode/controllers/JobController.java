@@ -48,15 +48,18 @@ public class JobController {
          model.addAttribute(jobForm);
          return "new-job";
         }
-        Employer employer = jobData.getEmployers().findById(jobForm.getEmployerId());
-        Location location = jobData.getLocations().findById(jobForm.getLocationId());
-        PositionType positionType = jobData.getPositionTypes().findById(jobForm.getPositionTypeId());
-        CoreCompetency coreCompetency = jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId());
-
-        //public Job(String aName, Employer aEmployer, Location aLocation, PositionType aPositionType, CoreCompetency aSkill)
-        Job newJob = new Job(jobForm.getName(), employer, location, positionType, coreCompetency);
-        jobData.add(newJob);
-        return "redirect:" +"/job?id=" + newJob.getId();
+//        //locate the pre-existing objects for the fields passed in jobForm
+//        Employer employer = jobData.getEmployers().findById(jobForm.getEmployerId());
+//        Location location = jobData.getLocations().findById(jobForm.getLocationId());
+//        PositionType positionType = jobData.getPositionTypes().findById(jobForm.getPositionTypeId());
+//        CoreCompetency coreCompetency = jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId());
+//
+//        //public Job(String aName, Employer aEmployer, Location aLocation, PositionType aPositionType, CoreCompetency aSkill)
+//        Job newJob = new Job(jobForm.getName(), employer, location, positionType, coreCompetency);
+//        jobData.add(newJob);
+        int newJobID = jobData.addJobListing(jobForm);
+//        int newJobID = jobData.addJobListing(jobForm.getName(), jobForm.getEmployerId(), jobForm.getLocationId(), jobForm.getPositionTypeId(), jobForm.getCoreCompetencyId());
+        return "redirect:" +"/job?id=" + newJobID;
 
     }
 }

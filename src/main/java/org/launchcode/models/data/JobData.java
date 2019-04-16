@@ -2,6 +2,7 @@ package org.launchcode.models.data;
 
 import javafx.geometry.Pos;
 import org.launchcode.models.*;
+import org.launchcode.models.forms.JobForm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,8 +82,38 @@ public class JobData {
         return matchingJobs;
     }
 
+//    //locate the pre-existing objects for the fields passed in jobForm
+//    Employer employer = jobData.getEmployers().findById(jobForm.getEmployerId());
+//    Location location = jobData.getLocations().findById(jobForm.getLocationId());
+//    PositionType positionType = jobData.getPositionTypes().findById(jobForm.getPositionTypeId());
+//    CoreCompetency coreCompetency = jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId());
+//
+//    //public Job(String aName, Employer aEmployer, Location aLocation, PositionType aPositionType, CoreCompetency aSkill)
+//    Job newJob = new Job(jobForm.getName(), employer, location, positionType, coreCompetency);
+//        jobData.add(newJob);
 
-    public void add(Job job) {
+    public int addJobListing(JobForm jobForm){
+        Job newJob = new Job(jobForm.getName(),
+            this.getEmployers().findById(jobForm.getEmployerId()),
+            this.getLocations().findById(jobForm.getLocationId()),
+            this.getPositionTypes().findById(jobForm.getPositionTypeId()),
+            this.getCoreCompetencies().findById(jobForm.getCoreCompetencyId()));
+        this.add(newJob);
+        return newJob.getId();
+
+    }
+    public int addJobListing(String jobName, int employerID, int locationID, int positionTypeID, int coreCompetencyID){
+        Job newJob = new Job(jobName,
+            this.getEmployers().findById(employerID),
+            this.getLocations().findById(locationID),
+            this.getPositionTypes().findById(positionTypeID),
+            this.getCoreCompetencies().findById(coreCompetencyID));
+        this.add(newJob);
+        return newJob.getId();
+
+    }
+
+    private void add(Job job) {
         jobs.add(job);
     }
 
